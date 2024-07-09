@@ -3,7 +3,8 @@ package com.sayan.dsa;
 import java.util.Random;
 
 /**
- * This class is a comparison of linear search and binary search algorithms across different input sizes and number of searches.
+ * This class is a comparison of linear search and binary search algorithms
+ * across different input sizes and number of searches.
  * @author Sayan Biswas
  * @version 09.07.2024
  */
@@ -13,6 +14,7 @@ public class SearchAlgorithmComparison {
     static int sortComparisons = 0;
 
     /**
+     * Starting point of program
      * Calls other methods
      * @param args Arguments passed to the main method
      */
