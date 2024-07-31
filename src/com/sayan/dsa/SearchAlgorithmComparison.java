@@ -5,13 +5,12 @@ import java.util.Random;
 /**
  * This class is a comparison of linear search and binary search algorithms
  * across different input sizes and number of searches.
- * @author Sayan Biswas
- * @version 09.07.2024
  */
 public class SearchAlgorithmComparison {
-    static int linearSearchComparisons = 0;
-    static int binarySearchComparisons = 0;
-    static int sortComparisons = 0;
+    static long linearSearchComparisons = 0;
+    static long binarySearchComparisons = 0;
+    static long sortComparisons = 0;
+    static long totalSortComparisons = 0;
 
     /**
      * Starting point of program
@@ -51,10 +50,13 @@ public class SearchAlgorithmComparison {
     private static void linearSearchWorker(int n, int m) {
         SearchAlgorithmComparison ob = new SearchAlgorithmComparison();
         Random rand = new Random();
-        int[] arr = ob.arrayFiller(n);
-        for (int i = 0; i < m; i++) {
-            ob.linearSearch(arr, n, rand.nextInt(n));
+        for (int j = 0; j <1000; j++) {
+            int[] arr = ob.arrayFiller(n);
+            for (int i = 0; i < m; i++) {
+                ob.linearSearch(arr, n, rand.nextInt(n*100));
+            }
         }
+        linearSearchComparisons/=1000;
         System.out.print(linearSearchComparisons + "), ");
     }
 
@@ -66,11 +68,17 @@ public class SearchAlgorithmComparison {
     private static void binarySearchWorker(int n, int m) {
         SearchAlgorithmComparison ob = new SearchAlgorithmComparison();
         Random rand = new Random();
-        int[] arr = ob.arrayFiller(n);
-        int[] sortedArr = ob.quickSort(arr); // Sort the array for binary search
-        for (int i = 0; i < m; i++) {
-            ob.binarySearch(sortedArr, n, rand.nextInt(n));
+        for (int j = 0; j <1000; j++) {
+            int[] arr = ob.arrayFiller(n);
+            int[] sortedArr = ob.quickSort(arr); // Sort the array for binary search
+            for (int i = 0; i < m; i++) {
+                ob.binarySearch(sortedArr, n, rand.nextInt(n*100));
+            }
         }
+       totalSortComparisons/=1000;
+       binarySearchComparisons/=1000;
+        binarySearchComparisons += totalSortComparisons;
+        totalSortComparisons = 0;
         System.out.print(binarySearchComparisons + "), ");
     }
 
@@ -83,7 +91,7 @@ public class SearchAlgorithmComparison {
         int[] arr = new int[size];
         Random rand = new Random();
         for (int i = 0; i < arr.length; i++) {
-            arr[i] = rand.nextInt(size);
+            arr[i] = rand.nextInt(size*100);
         }
         return arr;
     }
@@ -137,7 +145,8 @@ public class SearchAlgorithmComparison {
     private int[] quickSort(int[] arr) {
         // Call the recursive quicksort function
         quickSort(arr, 0, arr.length - 1);
-        binarySearchComparisons += sortComparisons;
+        totalSortComparisons += sortComparisons;
+        sortComparisons = 0;
         return arr;
     }
 
@@ -156,6 +165,7 @@ public class SearchAlgorithmComparison {
             quickSort(arr, low, partitionIndex - 1);
             quickSort(arr, partitionIndex + 1, high);
         }
+
     }
 
     /**
